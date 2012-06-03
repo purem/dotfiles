@@ -1,0 +1,5 @@
+[user]
+	name = Jonathan Evans
+	email = jonathan.r.h.evans@gmail.com
+[credential]
+	helper = osxkeychain
