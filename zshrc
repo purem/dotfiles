@@ -1,15 +1,11 @@
-#
-# Sets Oh My Zsh options.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# Set the path to Oh My Zsh.
+export OMZ="$HOME/.oh-my-zsh"
 
 # Set the key mapping style to 'emacs' or 'vi'.
 zstyle ':omz:module:editor' keymap 'vi'
 
 # Auto convert .... to ../..
-zstyle ':omz:module:editor' dot-expansion 'no'
+zstyle ':omz:module:editor' dot-expansion 'yes'
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':omz:*:*' case-sensitive 'no'
@@ -38,7 +34,10 @@ zstyle ':omz:load' omodule \
   'alias' \
   'completion' \
   'utility' \
-  'prompt'
+  'prompt' \
+  'tmux'
+
+zstyle ':omz:module:tmux' auto-start 'yes'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -49,13 +48,19 @@ zstyle ':omz:module:prompt' theme 'sorin'
 source "$OMZ/init.zsh"
 
 # Customize to your needs...
+export PATH=~/bin:/usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1/bin:/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p0/bin/:$PATH
 
-export PATH=~/bin:$PATH
+#Cappuccino
+export NARWHAL_ENGINE=jsc
+export PATH="/usr/local/narwhal/bin:$PATH"
+export CAPP_BUILD="/Users/jon/src/cappuccino/Build"
+
+alias cwb='ssh cwb@localhost -p 2222'
+
+export CXX=g++-4.7
+export CC=g++-4.7
+export MAKEFLAGS='-j 16' # Logical cores * 2
 
 if [ -f `brew --prefix`/etc/autojump ]; then
-  . `brew --prefix`/etc/autojump
+    . `brew --prefix`/etc/autojump
 fi
-
-bindkey -M viins "jj" vi-cmd-mode
-
-export CPP=""

@@ -6,7 +6,8 @@
 " locojay dotfiles  https://github.com/locojay/dotfiles.git
 
 
-" Preamble --------------------------------------------------------------- {{{
+
+" Preamble ---------------------------------------------------------------- {{{
 
 filetype off
 set rtp+=~/.vim/bundle/vundle/
@@ -14,8 +15,7 @@ call vundle#rc()
 filetype plugin indent on
 set nocompatible
 " }}}
-"
-" Plugins --------------------------------------------------------------- {{{
+" Plugins ----------------------------------------------------------------- {{{
 Bundle 'gmarik/vundle'
 Bundle 'sjl/badwolf'
 Bundle 'tpope/vim-rails.git'
@@ -29,6 +29,10 @@ Bundle 'google.vim'
 Bundle 'a.vim'
 Bundle 'OmniCppComplete'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-powerline'
+Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'sudo.vim'
+Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 " }}}
 " Basic options -----------------------------------------------------------{{{
 
@@ -70,7 +74,8 @@ set colorcolumn=+1
 
 " Time out on key codes but not mappings.
 " " Basically this makes terminal Vim work sanely.
-set notimeout
+"set notimeout
+set timeoutlen=500
 set ttimeout
 set ttimeoutlen=10
 
@@ -82,7 +87,7 @@ set completeopt=longest,menuone,preview
 
 " Save when losing focus
 au FocusLost * :silent! wall
-
+j
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
@@ -225,7 +230,7 @@ inoremap <c-l> <c-k>l*
 " Convenience mappings ---------------------------------------------------- {{{
 
 " Source this file
-nmap <silent> <Leader>sv :so `pwd -P $MYVIMRC`<CR>
+nmap <silent> <Leader>sv :so $MYVIMRC<CR>
 
 "Windows Settings
 " Move the cursor to the window left of the current one
@@ -277,9 +282,13 @@ nnoremap <leader>u :syntax sync fromstart<cr>:redraw!<cr>
 
 " System clipboard interaction
 " From https://github.com/henrik/dotfiles/blob/master/vim/config/mappings.vim
+"need to set this for OSX
+set clipboard=unnamed
 noremap <leader>y "*y
+"noremap <D-c> y
 noremap <leader>p :set paste<CR>"*p<CR>:set nopaste<CR>
 noremap <leader>P :set paste<CR>"*P<CR>:set nopaste<CR>
+"noremap <D-v> p
 
 " I constantly hit "u" in visual mode when I mean to "y". Use "gu" for those rare occasions.
 " From https://github.com/henrik/dotfiles/blob/master/vim/config/mappings.vim
@@ -306,7 +315,7 @@ nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 " vnoremap <leader>UG :w !gist -p \| pbcopy<cr>
 
 " Send visual selection to paste.stevelosh.com
-vnoremap <c-p> :w !curl -sF 'sprunge=<-' 'http://paste.stevelosh.com' \| tr -d '\n ' \| pbcopy && open `pbpaste`<cr>
+"vnoremap <c-p> :w !curl -sF 'sprunge=<-' 'http://paste.stevelosh.com' \| tr -d '\n ' \| pbcopy && open `pbpaste`<cr>
 
 " Make backspace work sanely in visual mode
 vnoremap <bs> x
@@ -988,6 +997,22 @@ let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
 
 " }}}
+" Latex {{{
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf = 'mkdir -p latex-build; /usr/texbin/pdflatex -output-directory latex-build -interaction nonstopmode $*; cp latex-build/*.pdf .'
+let g:Tex_ViewRule_pdf = 'Preview'
+let g:Tex_IgnoredWarnings="Font""\n"
+let g:Tex_IgnoredWarnings =
+                \'Underfull'."\n".
+                \'Overfull'."\n".
+                \'specifier changed to'."\n".
+                \'You have requested'."\n".
+                \'Missing number, treated as zero.'."\n".
+                \'There were undefined references'."\n".
+                \'Latex Warning:'."\n".
+                \'LaTeX Warning:' " float stuck
+let g:Tex_IgnoreLevel = 8
+"}}}
 " Linediff {{{
 
 vnoremap <leader>l :Linediff<cr>
@@ -1006,36 +1031,36 @@ nnoremap \| :call MakeGreen('')<cr>
 " }}}
 " NeoComplCache {{{
 
- "Use neocomplcache
- let g:neocomplcache_enable_at_startup = 1
- " Use smartcase
- let g:neocomplcache_enable_smart_case = 1
- " Use camel case completion
- let g:neocomplcache_enable_camel_case_completion = 1
- " Use underbar completion
- let g:neocomplcache_enable_underbar_completion = 1
- " Set minimum syntax keyword length
- let g:neocomplcache_min_syntax_length = 3
- let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+ ""Use neocomplcache
+ "let g:neocomplcache_enable_at_startup = 1
+ "" Use smartcase
+ "let g:neocomplcache_enable_smart_case = 1
+ "" Use camel case completion
+ "let g:neocomplcache_enable_camel_case_completion = 1
+ "" Use underbar completion
+ "let g:neocomplcache_enable_underbar_completion = 1
+ "" Set minimum syntax keyword length
+ "let g:neocomplcache_min_syntax_length = 3
+ "let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 
- " Plugin key-mappings.
- imap <C-k>     <Plug>(neocomplcache_snippets_expand)
- smap <C-k>     <Plug>(neocomplcache_snippets_expand)
- inoremap <expr><C-g>     neocomplcache#undo_completion()
- inoremap <expr><C-l>     neocomplcache#complete_common_string()
+ "" Plugin key-mappings.
+ "imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+ "smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+ "inoremap <expr><C-g>     neocomplcache#undo_completion()
+ "inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 
- " Recommended key-mappings.
- " <CR>: close popup and save indent.
- inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
- " <TAB>: completion.
- inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
- " <C-h>, <BS>: close popup and delete backword char.
- inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
- inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
- inoremap <expr><C-y>  neocomplcache#close_popup()
- inoremap <expr><C-e>  neocomplcache#cancel_popup()
+ "" Recommended key-mappings.
+ "" <CR>: close popup and save indent.
+ "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+ "" <TAB>: completion.
+ "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+ "" <C-h>, <BS>: close popup and delete backword char.
+ "inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+ "inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+ "inoremap <expr><C-y>  neocomplcache#close_popup()
+ "inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 "}}}
 " NERD Tree {{{
@@ -1672,5 +1697,4 @@ else
 endif
 
 " }}}
-
 
