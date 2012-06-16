@@ -13,3 +13,9 @@ do
     fi
     ln -nfs ${source} ${target}
 done
+
+cd ~
+git clone https://github.com/sorin-ionescu/oh-my-zsh.git ~/.oh-my-zsh 
+cd .oh-my-zsh
+git submodule update --init --recursive
+
