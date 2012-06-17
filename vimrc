@@ -47,11 +47,8 @@ set ttyfast  " Fast term conn. More chars redrawn instead of line based redraw
 set ruler  " Line / col display in bottom right
 set backspace=indent,eol,start  " Allow bs at eol, start(ol) and indents
 set nonumber  " Turn off line numbers to save space
-set norelativenumber  " Turn off relative (to cursor) line numbering
 set laststatus=2  " Always show the statusline regardless of no. windows
 set history=1000  " Sets the number of lines of command history to keep
-set undofile  " Peristent undo - vim remembers edits even when closed
-set undoreload=10000  " Max number of lines to save for undo
 set list  " Use list mode - all characters print including whitespace
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮  " Set chars for list mode
 set shell=/bin/zsh  " Set the shell to use when executing commands within vim
@@ -70,7 +67,14 @@ set title  " Make terminal inherit title from vim
 set linebreak  " Break lines on word barriers
 set dictionary=/usr/share/dict/words  " Completion of words from a dictionary
 set spellfile=~/.vim/custom-dictionary.utf-8.add " Dict. for spellchecking
-set colorcolumn=+1
+
+
+if version >= 730
+	set colorcolumn=+1
+	set undofile  " Peristent undo - vim remembers edits even when closed
+	set undoreload=10000  " Max number of lines to save for undo
+	set norelativenumber  " Turn off relative (to cursor) line numbering
+endif
 
 " Time out on key codes but not mappings.
 " " Basically this makes terminal Vim work sanely.
@@ -170,13 +174,18 @@ set expandtab  	"Expand tabs to softtabstop # of spaces
 set wrap
 set textwidth=80
 set formatoptions=qrn1
-set colorcolumn=+1
+
+if version >= 730
+    set colorcolumn=+1
+endif
 
 " }}}
 " Backups {{{
 
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
+if version >= 730
+	set undodir=~/.vim/tmp/undo//     " undo files
+	set backupdir=~/.vim/tmp/backup// " backups
+endif
 set directory=~/.vim/tmp/swap//   " swap files
 set backup                        " enable backups
 set noswapfile                    " It's 2012, Vim.

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # Set the path to Oh My Zsh.
-export OMZ="$HOME/.oh-my-zsh"
-=======
 #
 # Sets Oh My Zsh options.
 #
@@ -11,6 +8,7 @@ export OMZ="$HOME/.oh-my-zsh"
 #ii
 platform='unknown'
 unamestr=`uname`
+hostnamestr=`hostname`
 if [[ "$unamestr" == 'Linux' ]]; then
    platform='linux'
 elif [[ "$unamestr" == 'FreeBSD' ]]; then
@@ -19,6 +17,14 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='osx'
 fi
 
+
+
+if [[ $hostnamestr == 'cccad1' ]]; then
+    export PATH="/vol/cc/opt/gnu/zsh-4.3.17/bin:/vol/cc/opt/gnu/vim-7.3/bin:$PATH"
+fi
+
+echo $PATH
+export OMZ="$HOME/.oh-my-zsh"
 #function check {
 #command -v $1 >/dev/null 2>&1 || { echo >&2 "I require foo but it's not installed.  Aborting."; exit 1; }
 #}
@@ -55,8 +61,8 @@ zstyle ':omz:load' omodule \
   'spectrum' \
   'completion' \
   'utility' \
-  'prompt' \
-  'tmux'
+  'prompt' #\
+  #'tmux'
 
 zstyle ':omz:module:tmux' auto-start 'yes'
 
@@ -70,16 +76,14 @@ zstyle ':omz:module:prompt' theme 'sorin'
 source "$OMZ/init.zsh"
 
 # Customize to your needs...
-export PATH=~/bin:/usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1/bin:/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p0/bin/:$PATH
+#export PATH=~/bin:/usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1/bin:/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p0/bin/:$PATH
 
 #Cappuccino
 export NARWHAL_ENGINE=jsc
 export PATH="/usr/local/narwhal/bin:$PATH"
 export CAPP_BUILD="/Users/jon/src/cappuccino/Build"
 
-<<<<<<< HEAD
 alias cwb='ssh cwb@localhost -p 2222'
-=======
 if [[ $platform == 'osx' ]]; then
     export CXX=g++-4.7
     export CC=g++-4.7
@@ -89,4 +93,5 @@ if [[ $platform == 'osx' ]]; then
       . `brew --prefix`/etc/autojump
     fi
 fi
+
 
