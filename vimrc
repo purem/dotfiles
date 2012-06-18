@@ -69,7 +69,7 @@ set dictionary=/usr/share/dict/words  " Completion of words from a dictionary
 set spellfile=~/.vim/custom-dictionary.utf-8.add " Dict. for spellchecking
 
 
-if version >= 730
+if version >= 703
 	set colorcolumn=+1
 	set undofile  " Peristent undo - vim remembers edits even when closed
 	set undoreload=10000  " Max number of lines to save for undo
@@ -175,14 +175,14 @@ set wrap
 set textwidth=80
 set formatoptions=qrn1
 
-if version >= 730
+if version >= 703
     set colorcolumn=+1
 endif
 
 " }}}
 " Backups {{{
 
-if version >= 730
+if version >= 703
 	set undodir=~/.vim/tmp/undo//     " undo files
 	set backupdir=~/.vim/tmp/backup// " backups
 endif
@@ -1021,6 +1021,7 @@ let g:Tex_IgnoredWarnings =
                 \'Latex Warning:'."\n".
                 \'LaTeX Warning:' " float stuck
 let g:Tex_IgnoreLevel = 8
+let g:Imap_UsePlaceHolders = 0
 "}}}
 " Linediff {{{
 
